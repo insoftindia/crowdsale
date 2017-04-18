@@ -1,0 +1,164 @@
+{% extends 'crowdfunding/index.html' %}
+
+{% load staticfiles %}
+{% block header %}
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<!-- <header class="intro-header bg-img" id="sample">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>Loan via Crowdsale</h1>
+                    <hr class="small">
+                </div>
+            </div>
+        </div>
+    </div>
+</header> -->
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/proposal_list_and_new.js' %}"></script>
+    <script src="{% static 'js/view_proposal.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% if user.user_extented.user_type == 'FR' %}
+    <a id="post-proposal-button" title="Create Loan!" data-toggle="modal" data-target="#post-proposal" class="floating-button" ><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="post-proposal" role="dialog">
+        <form method="POST" id="post-proposal-form" action="{% url 'crowdfunding:create_crowdfunding' %}">
+            {% csrf_token %}
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create Proposals</h4>
+                    </div>
+                    <div class="modal-body color-gray">
+                        <div class="form-group row">
+                            <label for="title-input" class="col-xs-4 col-form-label">Student Name</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="text" name="title" id="title-input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="amount-input" class="col-xs-4 col-form-label">Token (<img src="{% static 'images/icon.png' %}" alt=" " width="18" height="18"/>)</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="number" name="amount" id="amount-input">
+                            </div>
+                            <!--<div class="amount-warning-msg text-danger" style="display: none;">Sorry, proposal amount is greater than group total amount</div>-->
+                        </div>
+                        <div class="form-group row">
+                            <label for="end-date-input" class="col-xs-4 col-form-label">End Date</label>
+                            <div class="col-xs-8">
+                                <input class="form-control" type="date" name="end_date" id="end-date-input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="text-input" class="col-xs-4 col-form-label">Description</label>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" name="text" id="text-input"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="type" value="post-proposal" class="btn btn-default btn-color" id="proposal-post">Post</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endif %}
+
+{% if user.is_superuser %}
+    <a id="user-creation-button" title="Create User!" data-toggle="modal" data-target="#user-creation" class="floating-button"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+
+    <!--new model-->
+    <div class="modal fade" id="user-creation" role="dialog">
+        <form method="POST" id="user-creation-form" enctype="multipart/form-data" action="{% url 'crowdfunding:user_creation' %}">
+            {% csrf_token %}
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">NEW USER</h4>
+                    </div>
+                    <div class="modal-body color-gray">
+                        <div class="form-group col-md-6">
+						  <label for="name">User Name:</label>
+						  <input type="Name" class="form-control" id="Name" name="username" placeholder="User Name">
+						</div>
+						<div class="form-group col-md-6">
+						  <label for="pwd">Password:</label>
+						  <input type="password" class="form-control" id="pwd" name="password" placeholder="Enter password">
+						</div>
+						<div class="clearfix"></div>
+						<div class="form-group col-md-6">
+						  <label for="email">Email ID:</label>
+						  <input type="email" class="form-control" id="email" name="email" placeholder="Enter email ID">
+						</div>
+
+						<div class="input-group col-md-6" style="margin-bottom:10px;padding-left:15px; padding-right:15px;">
+                            <label for="browse">Image:</label>
+							<input type="text" class="form-control image-preview-filename" disabled="disabled">
+							<span class="input-group-btn">
+								<div class="btn btn-default image-preview-input"  style="height: 34px;padding: 6px;margin-top: 42px !important;">
+								    <span class="image-preview-input-title">Browse</span>
+									<input type="file" accept="image/png, image/jpeg, image/gif" name="user_image"/>
+								</div>
+							</span>
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="form-group col-md-6">
+							  <label for="sel1">User Type:</label>
+							  <select class="form-control" id="sel1" name="user_type">
+								<option value="FR"> Facilitator</option>
+								<option value="MR">Member</option>
+							  </select>
+						</div>
+
+						<div class="form-group col-md-6">
+							  <label for="sel2">Funding Type:</label>
+							   <select class="form-control" id="sel2" name="funding_type">
+								<option value="MR"> Member Funding</option>
+								<option value="GR">Group Funding</option>
+							  </select>
+						</div>
+
+                         <div class="form-group col-md-6">
+                            <label for="private_key">Wallet Private Key:</label>
+                            <input type="text" class="form-control" id="private_key" name="private_key" placeholder="Enter Private Key">
+                        </div>
+
+						<div class="clearfix"></div>
+
+						<div class="form-group col-md-6" id="funding_amout" style="visibility:hidden;">
+							 <label for="funding_amout" >Funding Amount:</label>
+							 <input id="txtAmount" value="Amuont" name="funding_amout" type="Number" step="0.01" min="0" placeholder="Funding Amount" class="form-control"/>
+						</div>
+
+						<div class="col-md-6 text-right">
+							<button type="submit" name="type" value="create-user" class="btn btn-default btn-color" id="btn-user-creation">Create</button>
+						</div>
+						<div class="clearfix"></div>
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>
+{% endif %}
+
+{% block body_content %}
+{% endblock %}
+
+{% endblock %}
+
+

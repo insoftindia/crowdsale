@@ -1,0 +1,242 @@
+{% extends 'crowdfunding/crowdfunding.html' %}
+
+{% load staticfiles %}
+{% block body_content %}
+
+<header class="bg-image">
+<div class="container">
+    <!--<div class="col-md-9" style="left: 36px; width: 1190px; top: 40px; border-radius: 9px; opacity: 0.5; background-color: rgba(0,0,0,.5);">-->
+    <div class="col-md-9" style="width: 1200px; height: 545px; top: 30px; right: 40px; border-radius: 9px; opacity: 0.5; background-color: rgba(0,0,0,.5);">
+        <div id="container1">
+            <div class="row container2">
+
+                <div class="col-md-12 col">
+                    <!-- <h1>{{ title }}</h1><hr/> -->
+                    <h1>Approval Loan</h1><hr class="small">
+                </div>
+                <div class="col-md-12">
+                    {% for post in posts %}
+                        <div class="post-preview">
+                            <div style="margin-top:-30px;"></div>
+                                <section>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12 boder-list">
+                                                <div class="col-md-2">
+                                                    <div style="font-size:22px;margin-bottom:5px; color:#fff;">
+                                                         <h3 class="post-title" style="margin-top:0px;">
+                                                                {{ post.title }}
+                                                         </h3>
+                                                    </div>
+                                                    <div class="chip">
+                                                        {% if post.author.user_extented.user_image %}
+                                                            <img src="{{ post.author.user_extented.user_image.url }}" alt="Person" width="96" height="96"/>
+                                                        {% else %}
+                                                            <img src="{% static 'images/img_avatar.png' %}" alt="Person" width="96" height="96"/>
+                                                        {% endif %}
+                                                        <strong> {{ post.author|title }} </strong>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 detail-link">
+                                                    <a class="pill" href="{% url 'crowdfunding:crowdfunding_detail' pk=post.pk %}">
+                                                        <p style="margin-top: 0px;">{{ post.text|truncatechars:150 }}</p>
+                                                    </a>
+                                                    <strong>
+                                                        <div class="col-md-6" style="margin-bottom:10px;padding-left: 0px;color: #fff;">Created on <span style="color:rgb(38, 171, 226);">{{ post.created_datetime|date:"M d, Y" }}</span>
+                                                        </div>
+                                                        <div class="col-md-6 text-right" style="padding-right: 0px; margin-bottom:10px;color:#fff;">Validity on <span style="color:rgb(38, 171, 226);">{{ post.end_date|date:"M d, Y" }}</span>
+                                                        </div>
+                                                    </strong>
+                                                </div>
+                                                
+                                                <div class="col-md-2 text-right">
+
+                                                    <div style="left:70%; top: 5px; margin-bottom: 10px; font-size: 25px;">
+                                                        <!--<div class="text-right"><img src="{% static 'images/icon.png' %}" style="background-color: #FFF; border-radius: 2px; zoom: 1.7;" alt=" " width="20" height="20"/><strong><input class="colval" style="width: 40%; color: rgb(38, 171, 226); font-weight: 600;" type="number" min="0" name="amount" id="amount-input"></strong></div>-->
+                                                        <div class="text-right"><img src="{% static 'images/icon.png' %}" style="background-color: #FFF; border-radius: 2px; zoom: 1.7;" alt=" " width="15" height="15"/>&nbsp;<strong style="font-size: 20px; vertical-align: middle;">{{ post.amount }}</strong></div>
+                                                    </div>
+
+                                                    {% if user.user_extented.user_type == 'FR' and post.state == 'DT' %}
+                                                        <div class="col-md-14 text-right">
+                                                            <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    <!--{% if user.user_extented.user_type == 'FR' %}-->
+                                                        <!--<div class="col-md-14 text-right">-->
+                                                            <!--<a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>-->
+                                                        <!--</div>-->
+                                                    <!--{% endif %}-->
+
+                                                    <!-- <div id="voting" style="margin-bottom: 10px;">
+                                                        <button type="button"
+                                                                    id="VoteBtn"
+                                                                    class="btn btn-success btn-like fa fa-thumbs-o-up"
+                                                                    data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                                                {{ upvote }}</button>
+                                                        <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                                                            {{ downvote }}</button>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            
+                            <!--<p class="post-meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</p>-->
+
+                        </div>
+                        
+                    {% endfor %}
+
+                    {% if posts.has_other_pages %}
+                        <div class="col-md-12 text-right">
+                            <ul class="pagination">
+                                {% if posts.has_previous %}
+                                    <li><a href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&laquo;</span></li>
+                                {% endif %}
+                                {% for i in posts.paginator.page_range %}
+                                    {% if posts.number == i %}
+                                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                    {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if users.has_next %}
+                                    <li><a href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div>
+
+        <!-- <div class="wa-slider-section">
+        <div class="wa-slider-list">
+            <div class="cycle-slideshow" data-cycle-fx="fade" data-cycle-timeout="5000" data-cycle-slides=".wa-slider-item" data-cycle-auto-height="container" data-cycle-pager="#id_slider_big .pager-id" data-cycle-pager-template="" data-cycle-prev="#id_slider_big .wa-slider-navigation-id .cycle-prev" data-cycle-next="#id_slider_big .wa-slider-navigation-id .cycle-next">
+                <div class="wa-slider-item">
+                    <div class="wa-slider-title">
+                        <h2><a href="http://demo.wpamanuke.com/ponzi/value-investing/" title="">Value Investing</a></h2>
+                        <div class="wa-line-heading">&nbsp;</div>
+                    </div>
+                    <div class="wa-slider-title">
+                        <h2><a href="http://demo.wpamanuke.com/ponzi/value-investing/" title="">Value Investing</a></h2>
+                        <div class="wa-line-heading">&nbsp;</div>
+                    </div>
+                    <div class="wa-slider-title">
+                        <h2><a href="http://demo.wpamanuke.com/ponzi/value-investing/" title="">Value Investing</a></h2>
+                        <div class="wa-line-heading">&nbsp;</div>
+                    </div>
+                    <div class="wa-slider-meta">
+                        <a href="http://demo.wpamanuke.com/ponzi/category/economy/" title="View all posts in ECONOMY" rel="category tag">ECONOMY</a> ,  
+                        <span>Date :</span>
+                        <span class="wa-slider-date">7 Mar 2014</span>,  
+                        <span>Posted by :</span>
+                        <a href="http://demo.wpamanuke.com/ponzi/author/jennifer/" title="Posts by Jennifer Dores" rel="author">Jennifer Dores</a>                                                          <span class="pull-right wa-slider-navigation">
+                            <a class="prev" href="" title=""><i class="fa fa-chevron-left"></i></a>
+                            <a class="next" href="" title=""><i class="fa fa-chevron-right"></i></a>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="wa-slider-item">
+                    <div class="wa-slider-title">
+                        <h2><a href="http://demo.wpamanuke.com/ponzi/margin-of-safety/" title="">Margin of Safety</a></h2>
+                        <div class="wa-line-heading">&nbsp;</div>
+                    </div>
+                    <div class="wa-slider-meta">
+                        <a href="http://demo.wpamanuke.com/ponzi/category/economy/" title="View all posts in ECONOMY" rel="category tag">ECONOMY</a> ,  
+                        <span>Date :</span>
+                        <span class="wa-slider-date">7 Mar 2014</span>,  
+                        <span>Posted by :</span>
+                        <a href="http://demo.wpamanuke.com/ponzi/author/admin/" title="Posts by admin" rel="author">admin</a>, <span>Tags : </span> <a href="http://demo.wpamanuke.com/ponzi/tag/investment/" rel="tag">investment</a>,<a href="http://demo.wpamanuke.com/ponzi/tag/value-investing/" rel="tag">value investing</a>                                                         <span class="pull-right wa-slider-navigation">
+                            <a class="prev" href="" title=""><i class="fa fa-chevron-left"></i></a>
+                            <a class="next" href="" title=""><i class="fa fa-chevron-right"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="wa-slider-item">
+                    <div class="wa-slider-title">
+                        <h2><a href="http://demo.wpamanuke.com/ponzi/mr-market/" title="">Mister Market</a></h2>
+                        <div class="wa-line-heading">&nbsp;</div>
+                    </div>
+                    <div class="wa-slider-meta">
+                        <a href="http://demo.wpamanuke.com/ponzi/category/economy/" title="View all posts in ECONOMY" rel="category tag">ECONOMY</a> ,  
+                        <span>Date :</span>
+                        <span class="wa-slider-date">7 Mar 2014</span>,  
+                        <span>Posted by :</span>
+                        <a href="http://demo.wpamanuke.com/ponzi/author/admin/" title="Posts by admin" rel="author">admin</a>, <span>Tags : </span> <a href="http://demo.wpamanuke.com/ponzi/tag/investment/" rel="tag">investment</a>,<a href="http://demo.wpamanuke.com/ponzi/tag/market/" rel="tag">market</a>                                                           <span class="pull-right wa-slider-navigation">
+                            <a class="prev" href="" title=""><i class="fa fa-chevron-left"></i></a>
+                            <a class="next" href="" title=""><i class="fa fa-chevron-right"></i></a>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="wa-slider-item">
+                    <div class="wa-slider-title">
+                        <h2><a href="http://demo.wpamanuke.com/ponzi/2-factor-of-investment/" title="">2 Factor of Investment</a></h2>
+                        <div class="wa-line-heading">&nbsp;</div>
+                    </div>
+                    <div class="wa-slider-meta">
+                        <a href="http://demo.wpamanuke.com/ponzi/category/economy/" title="View all posts in ECONOMY" rel="category tag">ECONOMY</a> ,  
+                        <span>Date :</span>
+                        <span class="wa-slider-date">7 Mar 2014</span>,  
+                        <span>Posted by :</span>
+                        <a href="http://demo.wpamanuke.com/ponzi/author/admin/" title="Posts by admin" rel="author">admin</a>                                                           <span class="pull-right wa-slider-navigation">
+                            <a class="prev" href="" title=""><i class="fa fa-chevron-left"></i></a>
+                            <a class="next" href="" title=""><i class="fa fa-chevron-right"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div></div> -->
+    </div>
+</div>
+<div class="clearfix"></div><br/>
+<div class="col-md-12">
+        <ul class="list-inline text-center font-10 m-b">
+            <li>
+                <a href="#">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <p class="text-center m-t">Copyright &copy; Insoft 2017</p>
+    </div>
+</header>
+<!-- <hr> -->
+<!-- <footer> -->
+    <!-- <div class="container footer">
+        <div class="row">
+            
+        </div>
+    </div> -->
+<!-- </footer> -->
+
+{% endblock %}

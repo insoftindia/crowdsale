@@ -1,0 +1,54 @@
+{% extends 'login/index.html' %}
+
+{% block login %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="sign-in-htm">
+
+        <div class="group">
+            <input id="username" type="text" class="input" name="username" required="required" placeholder="Username">
+        </div>
+        <div class="group">
+            <input id="password" type="password" class="input" data-type="password" name="password" required="required" placeholder="Password">
+        </div>
+        {% if not_valid_user %}
+        <div class="group">
+            <div class="form-control-feedback">Sorry, that username and password is not valid. Try another?</div>
+        </div>
+        {% endif %}
+        <div class="group">
+            <input type="submit" name="type" class="button" value="login">
+        </div>
+        <div class="hr"></div>
+    </div>
+</form>
+{% endblock %}
+
+
+{% block registration %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="sign-up-htm">
+        <div class="group">
+            <input id="register-username" type="text" class="input" name="username" required="required" placeholder="Username">
+            <div class="form-control-feedback" style="display: none;">Sorry, that username's taken. Try another?</div>
+        </div>
+        <div class="group">
+            <input id="register-password" type="password" class="input" data-type="password" name="password" required="required" placeholder="Password">
+        </div>
+        <div class="group">
+            <input id="register-repeat-password" type="password" class="input" data-type="password" name="repeat_password" required="required" placeholder="Repeat Password">
+        </div>
+        <div class="group">
+            <input id="register-email" type="text" class="input" name="email" required="required" placeholder="Email Address">
+        </div>
+        <div class="group">
+            <input id="register_button" type="submit" name="type" class="button" value="register">
+        </div>
+        <div class="hr"></div>
+        <div class="foot-lnk">
+            <a href='/' for="tab-1">Already Member?</a>
+        </div>
+    </div>
+</form>
+{% endblock %}

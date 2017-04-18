@@ -1,0 +1,383 @@
+{% extends 'crowdfunding/crowdfunding.html' %}
+
+{% load staticfiles %}
+{% block body_content %}
+
+<header class="intro-header bg-img" id="sample">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1 class="font-title">Loan via Crowdsale</h1>
+                    <hr class="small">
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div style="margin-top:10px;"></div>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            {% if user.is_superuser %}
+
+                <div class="scroll-down">
+                    <a href="#scroll"><img src="{% static 'images/slideshow-arrow-down.png' %}" style="width: 37px;     height: 62px; cursor: pointer;"/></a>
+                </div>
+
+
+                <!-- <div class="tp-caption sft stb tp-scrollbelowslider start" data-easing="easeOutBack" data-elementdelay="0.1" data-end="10" data-endeasing="easeOutBack" data-endelementdelay="0.1" data-endspeed="1000" data-hoffset="0" data-scrolloffset="1" data-speed="1000" data-start="4200" data-voffset="210" data-x="center" data-y="center" style="z-index: 7; left: 638px; top: 515.5px; background-color: black; visibility: visible; opacity: 1; transform: translate3d(0px, 0px, 0px);">
+                    <div class="tp-layer-inner-rotation   rs-slideloop" data-easing="Power3.easeInOut" data-speed="1" data-xe="0" data-xs="0" data-ye="10" data-ys="-0" style="transform: translate3d(0px, 0.769953px, 0px);">
+                    <img style="width: 37px; height: 62px;" alt="" data-hh="62" data-lazyload="http://3.bp.blogspot.com/-pvI87svD85g/Viz3TJIbNUI/AAAAAAAAAfw/KrggBKOv0uE/s1600/slideshow-arrow-down.png" data-ww="37" src="http://3.bp.blogspot.com/-pvI87svD85g/Viz3TJIbNUI/AAAAAAAAAfw/KrggBKOv0uE/s1600/slideshow-arrow-down.png">
+                    </div>
+                </div> -->
+
+               
+                <a href="crowdfunding.html"></a>
+                <div id="scroll" href="scroll" class='title-subtitle-box  wpb_animate_when_almost_visible wpb_top-to-bottom' style=' text-align: center;'>
+                    <h1 class='gg-animate wpb_animate_when_almost_visible ' style=''>ABOUT US</h1>
+                    <span class='has-underline wpb_animate_when_almost_visible '/>
+                    <p class='gg-animate wpb_animate_when_almost_visible ' style=''>Our development agency is committed to providing you the <strong>best service</strong>.</p>
+                </div>
+                <br>
+                <div class=" text-left in_row vc_row-fluid" style="margin-bottom: 0px;">
+                    <div class="col-md-6  col-sm-6 set-hover">
+                        <div class="wpb_wrapper" style="">
+                            <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-0s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                                <div class="media">
+                                    <div class="gg-icn-holder">
+                                        <span class="pull-center normal">
+                                        <!-- <span class="y_circle" style=" background-color: #000000;"> -->
+                                        <!-- About Section Icon -->
+                                        <i class="fa fa-globe icon-box pull-center normal fa-5x"></i>
+                                        <!-- About Section Icon End-->
+                                        <!-- </span> -->
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="media-heading">
+                                        <!-- About Section Sub Heading -->
+                                        <a href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" target="_self" title="Our mission">Open Loan Proposal</a>
+                                        <div class="vote-text">{{ latest_len }}</div>
+
+                                        <!-- About Section Sub Heading End-->
+                                        </h3>
+                                        <!-- About Section Content -->
+                                        <!-- <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> -->
+                                        <!-- <a class="btn" href="/p/sample-page.html" title="Learn more">Learn more</a> -->
+                                        <!-- About Section Content End -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4  col-sm-4 set-hover">
+                        <div class="wpb_wrapper" style="">
+                            <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-02s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                                <div class="media">
+                                    <div class="gg-icn-holder">
+                                    <span class="pull-center normal">
+                                    &lt;!&ndash;<span class="y_circle y_circle_main_color">&ndash;&gt;
+                                    &lt;!&ndash;&lt;!&ndash; About Section Icon &ndash;&gt;&ndash;&gt;
+                                    &lt;!&ndash;<i class="fa fa-thumbs-o-up icon-box pull-center normal fa-5x" style=""></i>&ndash;&gt;
+                                    &lt;!&ndash;</span>&ndash;&gt;
+                                    </span>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                    &lt;!&ndash; About Section Sub Heading &ndash;&gt;
+                                    <a href="#" target="_self" title="Our values">Active Loan</a>
+                                    <div class="vote-text">{{ member_count }}</div> 
+                                    </h3>
+                                    &lt;!&ndash; About Section Content &ndash;&gt;
+                                    &lt;!&ndash; <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> &ndash;&gt;
+                                    &lt;!&ndash; <div class="vote-text">{{ member_count }}</div> &ndash;&gt;
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                <div class="col-md-6  col-sm-6 set-hover">
+                    <div class="wpb_wrapper">
+                        <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-04s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                            <div class="media">
+                                <div class="gg-icn-holder">
+                                    <span class="pull-center normal">
+                                    <!-- <span class="y_circle" style=" background-color: #000000;"> -->
+                                    <!-- About Section Icon -->
+                                    <i class="fa fa-compass icon-box pull-center normal fa-5x"></i>
+                                    <!-- </span> -->
+                                    </span>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                    <!-- About Section Sub Heading -->
+                                    <a href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" target="_self" title="Our philosophy">Approved Loan Proposal</a>
+                                    <div class="vote-text">{{ closed_len }}</div>
+                                    </h3>
+                                    <!-- About Section Content -->
+                                    <!-- <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> -->
+                                    <!-- <a class="btn" href="/p/sample-page.html" title="Learn more">Learn more</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="scroll-up">
+                    <a class="scrollup img-rounded hidden-xs hidden-sm" href="#" style="display: block;">
+                        <i class="fa fa-angle-up" style="color:#fff;"></i>
+                    </a>
+                </div>
+
+            {% endif %}
+
+            {% if user.user_extented.user_type == 'FR' %}
+
+                <div class="scroll-down">
+                    <a href="#scroll"><img src="{% static 'images/slideshow-arrow-down.png' %}" style="width: 37px;     height: 62px; cursor: pointer;"/></a>
+                </div>
+               
+                <a href="crowdfunding.html"></a>
+                <div id="scroll" href="scroll" class='title-subtitle-box  wpb_animate_when_almost_visible wpb_top-to-bottom' style=' text-align: center;'>
+                    <h1 class='gg-animate wpb_animate_when_almost_visible ' style=''>ABOUT US</h1>
+                    <span class='has-underline wpb_animate_when_almost_visible '/>
+                    <p class='gg-animate wpb_animate_when_almost_visible ' style=''>Our development agency is committed to providing you the <strong>best service</strong>.</p>
+                </div>
+                <br>
+                <div class=" text-left in_row vc_row-fluid" style="margin-bottom: 0px;">
+                    <div class="col-md-6  col-sm-6 set-hover">
+                        <div class="wpb_wrapper" style="">
+                            <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-0s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                                <div class="media">
+                                    <div class="gg-icn-holder">
+                                        <span class="pull-center normal">
+                                        <!-- <span class="y_circle" style=" background-color: #000000;"> -->
+                                        <!-- About Section Icon -->
+                                        <i class="fa fa-globe icon-box pull-center normal fa-5x"></i>
+                                        <!-- About Section Icon End-->
+                                        <!-- </span> -->
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="media-heading">
+                                        <!-- About Section Sub Heading -->
+                                        <a href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" target="_self" title="Our mission">Open Loan Proposal</a>
+                                        <div class="vote-text">{{ latest_len }}</div>
+
+                                        <!-- About Section Sub Heading End-->
+                                        </h3>
+                                        <!-- About Section Content -->
+                                        <!-- <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> -->
+                                        <!-- <a class="btn" href="/p/sample-page.html" title="Learn more">Learn more</a> -->
+                                        <!-- About Section Content End -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4  col-sm-4 set-hover">
+                        <div class="wpb_wrapper" style="">
+                            <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-02s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                                <div class="media">
+                                    <div class="gg-icn-holder">
+                                    <span class="pull-center normal">
+                                    &lt;!&ndash;<span class="y_circle y_circle_main_color">&ndash;&gt;
+                                    &lt;!&ndash;&lt;!&ndash; About Section Icon &ndash;&gt;&ndash;&gt;
+                                    &lt;!&ndash;<i class="fa fa-thumbs-o-up icon-box pull-center normal fa-5x" style=""></i>&ndash;&gt;
+                                    &lt;!&ndash;</span>&ndash;&gt;
+                                    </span>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                    &lt;!&ndash; About Section Sub Heading &ndash;&gt;
+                                    <a href="#" target="_self" title="Our values">Active Loan</a>
+                                    <div class="vote-text">{{ member_count }}</div> 
+                                    </h3>
+                                    &lt;!&ndash; About Section Content &ndash;&gt;
+                                    &lt;!&ndash; <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> &ndash;&gt;
+                                    &lt;!&ndash; <div class="vote-text">{{ member_count }}</div> &ndash;&gt;
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                <div class="col-md-6  col-sm-6 set-hover">
+                    <div class="wpb_wrapper">
+                        <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-04s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                            <div class="media">
+                                <div class="gg-icn-holder">
+                                    <span class="pull-center normal">
+                                    <!-- <span class="y_circle" style=" background-color: #000000;"> -->
+                                    <!-- About Section Icon -->
+                                    <i class="fa fa-compass icon-box pull-center normal fa-5x"></i>
+                                    <!-- </span> -->
+                                    </span>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                    <!-- About Section Sub Heading -->
+                                    <a href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" target="_self" title="Our philosophy">Approved Loan Proposal</a>
+                                    <div class="vote-text">{{ closed_len }}</div>
+                                    </h3>
+                                    <!-- About Section Content -->
+                                    <!-- <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> -->
+                                    <!-- <a class="btn" href="/p/sample-page.html" title="Learn more">Learn more</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="scroll-up">
+                    <a class="scrollup img-rounded hidden-xs hidden-sm" href="#" style="display: block;">
+                        <i class="fa fa-angle-up" style="color:#fff;"></i>
+                    </a>
+                </div>
+
+            {% endif %}
+            {% if user.user_extented.user_type == 'MR' %}
+
+                <div class="scroll-down">
+                    <a href="#scroll"><img src="{% static 'images/slideshow-arrow-down.png' %}" style="width: 37px;     height: 62px; cursor: pointer;"/></a>
+                </div>
+
+                <a href="crowdfunding.html"></a>
+                <div id="scroll" href="scroll" class='title-subtitle-box  wpb_animate_when_almost_visible wpb_top-to-bottom' style=' text-align: center;'>
+                    <h1 class='gg-animate wpb_animate_when_almost_visible ' style=''>ABOUT US</h1>
+                    <span class='has-underline wpb_animate_when_almost_visible '/>
+                    <p class='gg-animate wpb_animate_when_almost_visible ' style=''>Our development agency is committed to providing you the <strong>best service</strong>.</p>
+                </div>
+                <br>
+                <div class=" text-left in_row vc_row-fluid" style="margin-bottom: 0px;">
+                    <div class="col-md-6  col-sm-6 set-hover">
+                        <div class="wpb_wrapper" style="">
+                            <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-0s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                                <div class="media">
+                                    <div class="gg-icn-holder">
+                                        <span class="pull-center normal">
+                                        <!-- <span class="y_circle" style=" background-color: #000000;"> -->
+                                        <!-- About Section Icon -->
+                                        <i class="fa fa-globe icon-box pull-center normal fa-5x"></i>
+                                        <!-- About Section Icon End-->
+                                        <!-- </span> -->
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="media-heading">
+                                        <!-- About Section Sub Heading -->
+                                        <a href="{% url 'crowdfunding:crowdfunding_latest_proposals' %}" target="_self" title="Our mission">Open Loan Proposal</a>
+                                        <div class="vote-text">{{ latest_len }}</div>
+
+                                        <!-- About Section Sub Heading End-->
+                                        </h3>
+                                        <!-- About Section Content -->
+                                        <!-- <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> -->
+                                        <!-- <a class="btn" href="/p/sample-page.html" title="Learn more">Learn more</a> -->
+                                        <!-- About Section Content End -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4  col-sm-4">
+                        <div class="wpb_wrapper" style="">
+                            <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-02s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                                <div class="media">
+                                    <div class="gg-icn-holder">
+                                    <span class="pull-center normal">
+                                    &lt;!&ndash;<span class="y_circle y_circle_main_color">&ndash;&gt;
+                                    &lt;!&ndash;&lt;!&ndash; About Section Icon &ndash;&gt;&ndash;&gt;
+                                    &lt;!&ndash;<i class="fa fa-thumbs-o-up icon-box pull-center normal fa-5x" style=""></i>&ndash;&gt;
+                                    &lt;!&ndash;</span>&ndash;&gt;
+                                    </span>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                    &lt;!&ndash; About Section Sub Heading &ndash;&gt;
+                                    <div style="color:#26abe2"; href="#" target="_self" title="Our values">Active Loan</div>
+                                    <div class="vote-text">{{ member_count }}</div> 
+                                    </h3>
+                                    &lt;!&ndash; About Section Content &ndash;&gt;
+                                    &lt;!&ndash; <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> &ndash;&gt;
+                                    &lt;!&ndash; <div class="vote-text">{{ member_count }}</div> &ndash;&gt;
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                <div class="col-md-6  col-sm-6 set-hover">
+                    <div class="wpb_wrapper">
+                        <div class="featured-icon-box  wpb_animate_when_almost_visible wpb_bottom-to-top delay-04s has-transparent-back  wpb_start_animation" style="text-align:center;">
+                            <div class="media">
+                                <div class="gg-icn-holder">
+                                    <span class="pull-center normal">
+                                    <!-- <span class="y_circle" style=" background-color: #000000;"> -->
+                                    <!-- About Section Icon -->
+                                    <i class="fa fa-compass icon-box pull-center normal fa-5x"></i>
+                                    <!-- </span> -->
+                                    </span>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                    <!-- About Section Sub Heading -->
+                                    <a href="{% url 'crowdfunding:crowdfunding_closed_proposals' %}" target="_self" title="Our philosophy">Approved Loan Proposal</a>
+                                    <div class="vote-text">{{ closed_len }}</div>
+                                    </h3>
+                                    <!-- About Section Content -->
+                                    <!-- <p class="featured-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed pretium elit, quis consectetur leo.</p> -->
+                                    <!-- <a class="btn" href="/p/sample-page.html" title="Learn more">Learn more</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="scroll-up">
+                    <a class="scrollup img-rounded hidden-xs hidden-sm" href="#" style="display: block;">
+                        <i class="fa fa-angle-up" style="color:#fff;"></i>
+                    </a>
+                </div>                
+            {% endif %}
+        
+        </div>
+    </div>
+</section>  
+<br><br><br>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted m-b">Copyright &copy; Insoft 2017</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

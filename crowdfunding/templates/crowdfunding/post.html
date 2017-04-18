@@ -1,0 +1,168 @@
+{% extends 'crowdfunding/index.html' %}
+
+{% load staticfiles %}
+{% block content %}
+
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="height:100%; background-image: url('/static/images/home-bg.jpg')">
+<!-- <header class="intro-header"> -->
+    <!--<div class="container" style="width: 1200px; top:50px; height: 520px; border-radius: 12px; opacity: 0.7; background-color: rgba(0,0,0,.5);">-->
+    <div class="container" style="width: 1200px; top:40px; border-radius: 12px; opacity: 0.7; background-color: rgba(0,0,0,.5);">
+        <div id="container1">
+            <div class="col-md-12">
+                <div class="post-heading">
+                    <h1>{{ post.title }}</h1>
+                    <span class="meta">Posted by <a href="#">{{ post.author|title }}</a> on {{ post.published_datetime|date:"F d, Y" }}</span><hr>
+                
+                    <div class="col-md-12">
+                        <div class="row">
+                            <!--<div class="col-md-6 text-primary"> <strong style="color: #26abe2; font-size: 22px; vertical-align: middle;">&lt;!&ndash; {{user.username}} &ndash;&gt; M1 - Account </strong>(<img src="{% static 'images/icon.png' %}" style="background-color: #26abe2; border-radius: 12px;" alt=" " width="22" height="22"/>) <strong style="font-size: 20px; vertical-align: middle; color: #26abe2;"> 100 </strong>-->
+                            <!--</div>-->
+                            <div class="col-md-6 text-primary"><img style="background-color: #FFF;border-radius: 2px;zoom: 1.7;" src="{% static 'images/icon.png' %}" alt=" " width="15" height="22"/> <strong style="font-size: 20px; color: #2882a6; vertical-align: middle;"> {{ post.amount }} </strong></div>
+                            <div class="col-md-6 text-info text-right" style="font-size: 20px; color: #26abe2;"><strong> End Date - {{ post.end_date|date:"M d, Y" }} </strong></div>
+                        </div>
+                        <p>{{ post.text|linebreaksbr }}</p>
+                    </div>
+
+                    <!-- <div style="left:70%; top: 5px; margin-bottom: 10px; font-size: 25px;">
+                        <div class="text-right"><img src="/static/images/icon.png" style="background-color: #FFF; border-radius: 2px; zoom: 1.7;" alt=" " width="20" height="20"><strong><input class="colval" style="width: 40%; color: rgb(38, 171, 226); font-weight: 600;" type="number" name="amount" id="amount-input"></strong></div>
+                    </div> -->
+
+                    <!--<div class="col-md-6 text-primary"><img src="{% static 'images/icon.png' %}" style="background-color: #FFF; border-radius: 2px; zoom: 1.5;" alt=" " width="22" height="22"/><strong><input class="colval" style="width: 15%; color: rgb(38, 171, 226); font-weight: 600;" type="number" min="0" name="amount" id="amount-input"></strong>-->
+                    <!--</div>-->
+
+                    {% if user.is_superuser %}
+                        {% for contribute in contributes %}
+                            <a class="pull-left" href="#">
+                                <img class="img-circle avatar" src="{% static 'images/anonymous_user.png' %}" alt="avatar">
+                            </a>
+                            <span class="meta"> {{ contribute.contributer.username }}</span>
+                            <span class="meta"><img style="background-color: #FFF;border-radius: 6px;zoom: 1.7;" src="{% static 'images/icon.png' %}" alt=" " width="13" height="22"/> {{ contribute.amount }}</span>
+                            <div class="col-md-12" style="padding-bottom: 10px !important; color: #26abe2;">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if user.user_extented.user_type == 'FR' %}
+                        {% for contribute in contributes %}
+                            <a class="pull-left" href="#">
+                                <img class="img-circle avatar" src="{% static 'images/anonymous_user.png' %}" alt="avatar">
+                            </a>
+                            <span class="meta"> {{ contribute.contributer.username }}</span>
+                            <span class="meta"><img style="background-color: #FFF;border-radius: 6px;zoom: 1.7;" src="{% static 'images/icon.png' %}" alt=" " width="13" height="22"/> {{ contribute.amount }}</span>
+                            <div class="col-md-12" style="padding-bottom: 10px !important; color: #26abe2;">
+                            </div>
+                        {% endfor %}    
+                    {% endif %}
+                    {% if user.user_extented.user_type == 'MR' %}
+                        <div class="col-md-6 text-primary" style="padding-bottom: 40px !important;">
+                            <a id="contribute-ether-button" title="Contribute Ether!" data-toggle="modal" data-target="#contribute-ether"><button type="button" id='btn-amount-contribute' class="btn-color" data-post-id="{{ post.id }}">Contribute</button></a>
+                            <!--<a href="#"><button type="button" id='btn-amount-contribute' class="btn-color" data-post-id="{{ post.id }}">Contribute</button></a>-->
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="contribute-ether" role="dialog">
+                            <form method="POST" id="transfer-ether-form">
+                                {% csrf_token %}
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content" style="top:25px;">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Transfer Ether</h4>
+                                        </div>
+                                        <div class="modal-body color-gray">
+                                                {{ form.as_p }}
+                                            <!--<div class="form-group row" style="display:None;">-->
+                                                <!--<label for="proposal-input" class="col-xs-4 col-form-label">Proposal</label>-->
+                                                <!--<div class="col-xs-8">-->
+                                                    <!--<input class="form-control" type="text" name="proposal" id="proposal-input" value="{{ post.id }}">-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                            <!--<div class="form-group row m-b-30">-->
+                                                <!--<label for="ether-amount-input" class="col-xs-4 col-form-label">Token (<img src="{% static 'images/icon.png' %}" alt=" " width="18" height="18"/>)</label>-->
+                                                <!--<div class="col-xs-8">-->
+                                                    <!--<input class="form-control" type="number" name="ether-amount" id="ether-amount-input"/>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" name="type" value="ether-tranfer" class="btn btn-default btn-color" id="ether-tranfer">Transfer....</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <!-- <div class="col-md-6" row m-b-30">
+                        <label for="amount-input" class="col-xs-2 col-form-label">(<img src="{% static 'images/icon.png' %}" alt=" " width="18" height="18"/>)</label>
+                        <div class="col-xs-2">
+                            <input class="form-control" type="number" name="amount" id="amount-input">
+                        </div>
+                        <div class="amount-warning-msg text-danger" style="display: none;">Sorry, proposal amount is greater than group total amount</div>
+                    </div> -->
+                    <!-- <div class="col-md-6" id="voting">
+                        <button type="button"
+                                id="VoteBtn"
+                                class="btn btn-success btn-like fa fa-thumbs-o-up"
+                                data-loading-text=" ... " data-post-id="{{ post.id }}">
+                            {{ upvote }}</button>
+                        <button type="button" id="VoteBtnDown" class="btn btn-success btn-like fa fa-thumbs-o-down" data-loading-text=" ... " data-post-id="{{ post.id }}">
+                            {{ downvote }}</button>
+                    </div> -->
+                    {% if user.user_extented.user_type == 'FR' and post.state == 'DT' %}
+                        <div class="col-md-12 text-right">
+                            <a href="{% url 'crowdfunding:crowdfunding' %}"><button type="button" id='btn-close-proposal' class="btn-color" data-post-id="{{ post.id }}">Close</button></a>
+                        </div>
+                    {% endif %}
+
+                
+                    <!-- <div id="content">
+                        <div id="input">
+                            <input type="text" id="input-text" placeholder="type new message and press ENTER..." />
+                        </div>
+                        <div id="log"></div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 text-center" style="margin-top: 40px;">
+            <ul class="list-inline text-center f-size m-b">
+                <li>
+                    <a href="#">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <p class="m-t text-center">Copyright &copy; Insoft 2017</p>
+        </div>
+</header>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/view_proposal.js' %}"></script>
+{% endblock %}
+ 
