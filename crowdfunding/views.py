@@ -42,7 +42,7 @@ def latest_crowdfunding_proposals(request):
     # upvote = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__vote_type='UP').count()
     # downvote = CrowdFundingPostProposal.objects.filter(crowdfundingproposalvoting__vote_type='DN').count()
     
-    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':latest_posts, 'group_type':group_type, 'title':'Active Proposals'})
+    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':latest_posts, 'group_type':group_type, 'title':'Open Loan Proposals'})
 
 # def voted_crowdfunding_proposals(request):
 #     voted_posts_list = CrowdFundingProposalVoting.objects.filter(author=request.user)
@@ -64,7 +64,7 @@ def closed_crowdfunding_proposals(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         closed_posts = closed_paginator.page(closed_paginator.num_pages)
-    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':closed_posts, 'group_type':group_type, 'title':'Closed Proposals'})
+    return render(request, 'crowdfunding/crowdfunding_proposals.html', {'posts':closed_posts, 'group_type':group_type, 'title':'Approved Loan Proposals'})
 
 @login_required(login_url='/')
 def create_crowdfunding(request):

@@ -119,7 +119,10 @@ h3{font-size:26px!Important; font-weight: 600; padding-bottom: 5px;}
     /*background-color: #3a3a3a;*/
     padding-bottom: 65px;
 }
-.bg-image{background-image: url('/static/images/fourth-picture.jpg'); height: 657px; top:68px;}
+.bg-image{background-image: url('/static/images/fourth-picture.jpg'); height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; top:68px;}
 .bg-home{background-image: url('/static/images/home-bg.jpg'); height: 657px; top:68px;}
 /*.bg-image{background-image: url('/static/images/ny-fourth-picture.jpg'); height: 524; top:68px;}*/
 
@@ -174,7 +177,7 @@ h3{font-size:26px!Important; font-weight: 600; padding-bottom: 5px;}
 
 #container1{
     width: 100%;
-    height: 545px;
+    height: 95%;
     overflow: auto;
     padding-right: 15px;
 }
@@ -883,7 +886,7 @@ input:focus {
         padding: 0 20px;
     }
 
-    section { padding: 3em 0; text-align: left; /*background: #fff;*/}
+    section { padding: 10px 0px; text-align: left; /*background: #fff;*/}
     section.centered {
         text-align: center;
     }
